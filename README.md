@@ -29,9 +29,10 @@ $ poetry run uvicorn main:app --reload
 
 <details>
 <summary>Click to expand</summary>
-<img src="./assets/transcript.png" alt="Transcript" width="500" />
-<img src="./assets/summary.png" alt="Summary" width="500"/>
-<img src="./assets/notes.png" alt="Notes" width="500"/>
+
+![Transcript](./assets/transcript.jpg)
+![Summary](./assets/summary.jpg)
+![Notes](./assets/notes.jpg)
 </details>
 
 ## Demo
