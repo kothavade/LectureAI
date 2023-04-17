@@ -1,0 +1,21 @@
+{
+  // Favor poetry over sourcing venv
+  "python.terminal.activateEnvironment": false,
+  // Make ESLint work
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.js",
+  },
+  "eslint.workingDirectories": [
+    {
+      "directory": "frontend",
+    }
+  ],
+  // Make Prettier work
+  "prettier.configPath": "frontend/.prettierrc.js",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

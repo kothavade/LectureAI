@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend",
+      "type": "shell",
+      "command": "cd backend; poetry run uvicorn backend.main:app --reload"
+    },
+    {
+      "label": "frontend",
+      "type": "shell",
+      "command": "cd frontend; pnpm dev"
+    }
+  ]
+}
