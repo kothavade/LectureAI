@@ -9,8 +9,7 @@ $ git clone
 $ cd lecture-assistant
 # Frontend
 $ cd frontend
-# or npm / yarn
-$ pnpm install
+$ pnpm install # or npm / yarn
 $ pnpm run dev
 
 # Backend
@@ -30,9 +29,9 @@ $ poetry run uvicorn main:app --reload
 <details>
 <summary>Click to expand</summary>
 
-![Transcript](./assets/transcript.jpg)
-![Summary](./assets/summary.jpg)
+![Transcript](./assets/transcript.jpg) ![Summary](./assets/summary.jpg)
 ![Notes](./assets/notes.jpg)
+
 </details>
 
 ## Demo
@@ -43,6 +42,7 @@ $ poetry run uvicorn main:app --reload
 [![Youtube Demo](https://img.youtube.com/vi/9S9kFVsikUU/0.jpg)](https://www.youtube.com/watch?v=9S9kFVsikUU)
 
 Click on the image to watch the demo on Youtube.
+
 </details>
 
 ## Tech
