@@ -52,6 +52,7 @@ Click on the image to watch the demo on Youtube.
   - [Whisper](https://github.com/openai/whisper)
   - [OpenAI ChatGPT API](https://platform.openai.com/docs/introduction)
   - [FFMPEG](https://ffmpeg.org/)
+  - [SQLite](https://www.sqlite.org/index.html)
 - Frontend
   - [React](https://react.dev/)
   - [Mantine](https://mantine.dev/)
