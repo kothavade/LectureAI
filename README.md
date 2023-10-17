@@ -34,6 +34,7 @@ $ poetry run uvicorn main:app --reload
 
 </details>
 
+<!--
 ## Demo
 
 <details>
@@ -44,6 +45,8 @@ $ poetry run uvicorn main:app --reload
 Click on the image to watch the demo on Youtube.
 
 </details>
+
+-->
 
 ## Tech
 
