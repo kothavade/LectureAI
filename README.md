@@ -1,22 +1,6 @@
-# Lecture Assistant
+<h1 align="center"> 📹📝 Lecture Assistant</h1>
 
-A tool for quickly reviewing and taking notes on lectures.
-
-## Installation
-
-```bash
-$ git clone
-$ cd lecture-assistant
-# Frontend
-$ cd frontend
-$ pnpm install # or npm / yarn
-$ pnpm run dev
-
-# Backend
-$ cd backend
-$ poetry install
-$ poetry run uvicorn main:app --reload
-```
+A tool for quickly reviewing and taking notes on recorded lectures.
 
 ## Features
 
@@ -45,8 +29,23 @@ $ poetry run uvicorn main:app --reload
 Click on the image to watch the demo on Youtube.
 
 </details>
-
 -->
+
+## Installation
+
+```bash
+$ git clone
+$ cd lecture-assistant
+# Frontend
+$ cd frontend
+$ pnpm install # or npm / yarn
+$ pnpm run dev
+
+# Backend
+$ cd backend
+$ poetry install
+$ poetry run uvicorn main:app --reload
+```
 
 ## Tech
 
