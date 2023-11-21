@@ -3,7 +3,7 @@ name = "backend"
 version = "0.1.0"
 description = ""
 authors = ["Ved Kothavade <ved@kothavade.com>"]
-readme = "README.md"
+readme = "../README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -12,7 +12,9 @@ uvicorn = { extras = ["standard"], version = "^0.21.1" }
 ffmpeg-python = "^0.2.0"
 openai = "^0.27.4"
 openai-whisper = "^20230314"
-python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.270"
 
 [build-system]
 requires = ["poetry-core"]
@@ -24,6 +26,9 @@ select = [
     "W", # pycodestyle warnings
     "F", # pyflakes
     "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+    "PL" # pylint
 ]
 ignore = [
     "E501", # line too long, handled by black

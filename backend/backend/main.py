@@ -8,12 +8,14 @@ import openai
 import whisper
 from fastapi import BackgroundTasks, FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, BaseSettings, Field
+from whisper.transcribe import transcribe
 from whisper.utils import WriteSRT
 
 
 class Settings(BaseSettings):
-    openai_api_key: str
+    openai_api_key: str = Field(..., env="OPENAI_API_KEY")
 
     class Config:
         env_file = ".env"
@@ -43,7 +45,7 @@ c.execute(
         video_url TEXT NOT NULL,
         transcript TEXT,
         summary TEXT,
-        subtitle BLOB
+        subtitle TEXT
     )
 """
 )
@@ -51,16 +53,16 @@ conn.commit()
 conn.close()
 
 model = whisper.load_model("tiny.en")
-openai.api_key = Settings().openai_api_key
+openai.api_key = Settings.openai_api_key
 
 class Lecture(BaseModel):
     video_url: str
     transcript: str | None = Field(None, alias="transcript")
     summary: str | None = Field(None, alias="summary")
-    subtitle: bytes | None = Field(None, alias="subtitle")
+    subtitle: str | None = Field(None, alias="subtitle")
 
 
-def get_whisper(video_url: str) -> Tuple[str, bytes]:
+def get_whisper(video_url: str) -> Tuple[str, str]:
     video_name = video_url.split("/")[-1]
     video_name = video_name.split(".")[0]
 
@@ -68,12 +70,16 @@ def get_whisper(video_url: str) -> Tuple[str, bytes]:
     (ffmpeg.input(video_url).output(wav_path).run(cmd=["ffmpeg", "-nostdin"], capture_stdout=True, capture_stderr=True))
 
     result = model.transcribe(wav_path)
+
+    transcript = result["text"] if type(result["text"]) is str else "" # mostly for pyright's sake
+
+    # TODO: simplify getting the subtitles as a string (custom srt writer?)
     writer = WriteSRT(output_dir=tempfile.gettempdir())
     srt_path = f"{tempfile.gettempdir()}/{video_name}.srt"
     srt_file = open(srt_path, "w")
     writer.write_result(result, srt_file)
     subtitle = open(srt_path, "rb").read()
-    transcript = result["text"]
+    subtitle = subtitle.decode("utf-8")
     return subtitle, transcript
 
 
@@ -141,7 +147,11 @@ async def upload_lecture(lecture: Lecture, background_tasks: BackgroundTasks):
         conn.commit()
         conn.close()
 
-        background_tasks.add_task(process_lecture, lecture, lecture_id)
+        if lecture_id is not None:
+            background_tasks.add_task(process_lecture, lecture, lecture_id)
+        else:
+            print("Error inserting lecture into database")
+            return {"detail": "Error inserting lecture into database"}
     else:
         c.execute(
             """
@@ -175,7 +185,7 @@ async def get_lecture_info(lecture_id: int):
         return {"detail": "Lecture not found"}
 
 
-@app.get("/lecture/{lecture_id}/subtitle.srt")
+@app.get("/lecture/{lecture_id}/subtitle.srt", response_class=PlainTextResponse)
 async def get_lecture_subtitle(lecture_id: int):
     conn = sqlite3.connect("lectures.db")
     c = conn.cursor()
